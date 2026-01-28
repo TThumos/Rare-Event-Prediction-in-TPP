@@ -1,0 +1,11 @@
+
+pipeline_config_id: data_config
+
+data_format: pkl
+train_dir: ./data/earthquake/resplit/train.pkl
+valid_dir: ./data/earthquake/resplit/dev.pkl
+test_dir: ./data/earthquake/resplit/test.pkl
+data_specs:
+  num_event_types: 7
+  pad_token_id: 7
+  padding_side: right

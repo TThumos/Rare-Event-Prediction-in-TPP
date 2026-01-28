@@ -1,0 +1,139 @@
+dataset_name: taobao
+num_event_types: 7 # earthquake 7 taxi 10 retweet 3 stackoverflow 22 taobao 17 amazon 16 iptv 16
+
+data_resplit_config:
+  resplit_points: [0.6, 0.8]
+
+weight_cal_config:
+  weight_config: 
+    a: 4.0
+    b: 16.0
+    rho1: 8.0
+    rho2: 8.0
+  max_iter: 500
+
+# red_config:
+#   # threshold: 
+
+# intensity_cal_config:
+#   max_iter: 500
+#   sample_per_seq: 1000
+#   # kept_ratio: 
+
+runner_config:
+#   if_residual: True
+#   base_model_id: SAHP # RMTPP NHP SAHP THP AttNHP
+#   rare_head_config: [87, 64, 16, 2] # earthquake [40, 32, 16, 2] taxi [43, 32, 16, 2] retweet [36, 32, 16, 2] stackoverflow [87, 64, 16, 2] taobao [82, 64, 16, 2] amazon [81, 64, 16, 2] 
+#   alpha_range: [0, 0.1]
+#   model_config:
+#     split_points: [0.7, 1.0] 
+#     tau: 6 # earthquake 2 taxi 1 retweet 50 stackoverflow 6 taobao 4 amazon 2 
+#     sample_per_seq: [1024, 512, 512]
+#     alpha_range: [0.1, 0.1]
+#     device: cuda
+  optimizer_config:
+    lr: 0.01
+    factor: 0.5
+    patience: 2
+    threshold: 0.0001
+    min_lr: 0.0001
+    max_bad_epochs: 10
+    max_epoch: 300
+#   batch_size: 256
+
+RMTPP:
+  hidden_size: 64 # earthquake 32 taxi 32 retweet 32 stackoverflow 64 taobao 64 amazon 64
+  loss_integral_num_sample_per_step: 20
+  thinning:
+    num_seq: 10
+    num_sample: 1
+    num_exp: 500 
+    look_ahead_time: 10
+    patience_counter: 5 
+    over_sample_rate: 5
+    num_samples_boundary: 5
+    dtime_max: 5
+    num_step_gen: 1
+  gpu: 0
+  use_mc_samples: True
+
+NHP:
+  model_specs: {}
+  hidden_size: 16 # earthquake 8 taxi 8 retweet 8 stackoverflow 16 taobao 16 amazon 16
+  loss_integral_num_sample_per_step: 20
+  thinning:
+    num_seq: 10
+    num_sample: 1
+    num_exp: 500 
+    look_ahead_time: 10
+    patience_counter: 5 
+    over_sample_rate: 5
+    num_samples_boundary: 5
+    dtime_max: 5
+    num_step_gen: 1
+  gpu: 0
+  use_mc_samples: True
+
+SAHP:
+  hidden_size: 64 # earthquake 32 taxi 32 retweet 32 stackoverflow 64 taobao 64 amazon 64
+  time_emb_size: 16
+  use_ln: False
+  num_layers: 4
+  num_heads: 4
+  dropout_rate: 0.0
+  loss_integral_num_sample_per_step: 20
+  thinning: 
+    num_seq: 10
+    num_sample: 1
+    num_exp: 500 
+    look_ahead_time: 10
+    patience_counter: 5 
+    over_sample_rate: 5
+    num_samples_boundary: 5
+    dtime_max: 5
+    num_step_gen: 1
+  gpu: 0
+  use_mc_samples: True
+
+THP:
+  hidden_size: 64 # earthquake 32 taxi 32 retweet 32 stackoverflow 64 taobao 64 amazon 64
+  time_emb_size: 16
+  use_ln: False
+  num_layers: 4
+  num_heads: 4
+
+  dropout_rate: 0.0
+  loss_integral_num_sample_per_step: 20
+  thinning: 
+    num_seq: 10
+    num_sample: 1
+    num_exp: 500 
+    look_ahead_time: 10
+    patience_counter: 5 
+    over_sample_rate: 5
+    num_samples_boundary: 5
+    dtime_max: 5
+    num_step_gen: 1
+  gpu: 0
+  use_mc_samples: True
+
+AttNHP:
+  hidden_size: 16 # earthquake 8 taxi 8 retweet 8 stackoverflow 16 taobao 16 amazon 16
+  time_emb_size: 4
+  num_layers: 4
+  num_heads: 4
+  use_ln: False
+  dropout_rate: 0.0
+  loss_integral_num_sample_per_step: 20
+  thinning: 
+    num_seq: 10
+    num_sample: 1
+    num_exp: 500 
+    look_ahead_time: 10
+    patience_counter: 5 
+    over_sample_rate: 5
+    num_samples_boundary: 5
+    dtime_max: 5
+    num_step_gen: 1
+  gpu: 0
+  use_mc_samples: True
